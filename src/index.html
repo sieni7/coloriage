@@ -13,7 +13,29 @@
     </div>
     <main class="container-16-9">
         <div class="zone-gauche">
-            <!-- Miniature et palette seront ajoutées ici -->
+            <div class="miniature-container">
+                <!-- Copie statique du SVG pour la miniature (mêmes IDs pour future synchronisation) -->
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="svg-miniature">
+                    <circle id="zone-soleil" class="zone-coloriable" fill="#FFFFFF" cx="320" cy="80" r="40" />
+                    <polygon id="zone-toit" class="zone-coloriable" fill="#FFFFFF" points="200,50 50,200 350,200" />
+                    <rect id="zone-murs" class="zone-coloriable" fill="#FFFFFF" x="100" y="200" width="200" height="150" />
+                    <rect id="zone-porte" class="zone-coloriable" fill="#FFFFFF" x="170" y="250" width="60" height="100" />
+                    <rect id="zone-fenetre" class="zone-coloriable" fill="#FFFFFF" x="230" y="230" width="50" height="50" />
+                    <circle class="contour" fill="none" stroke="#000000" stroke-width="4" style="pointer-events: none;" cx="320" cy="80" r="40" />
+                    <polygon class="contour" fill="none" stroke="#000000" stroke-width="4" style="pointer-events: none;" points="200,50 50,200 350,200" />
+                    <rect class="contour" fill="none" stroke="#000000" stroke-width="4" style="pointer-events: none;" x="100" y="200" width="200" height="150" />
+                    <rect class="contour" fill="none" stroke="#000000" stroke-width="4" style="pointer-events: none;" x="170" y="250" width="60" height="100" />
+                    <rect class="contour" fill="none" stroke="#000000" stroke-width="4" style="pointer-events: none;" x="230" y="230" width="50" height="50" />
+                </svg>
+            </div>
+            <div class="palette-container">
+                <button class="feutre" data-color="#FF0000" aria-label="Rouge"></button>
+                <button class="feutre" data-color="#0000FF" aria-label="Bleu"></button>
+                <button class="feutre" data-color="#FFFF00" aria-label="Jaune"></button>
+                <button class="feutre" data-color="#008000" aria-label="Vert"></button>
+                <button class="feutre" data-color="#FFA500" aria-label="Orange"></button>
+                <button class="feutre" data-color="#800080" aria-label="Violet"></button>
+            </div>
         </div>
         <div class="zone-droite">
                     <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
