@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. Mettre à jour l'état global
             AppState.activeColor = feutre.getAttribute('data-color');
             
-            console.log('Couleur active mise à jour :', AppState.activeColor);
         });
     });
 });
