@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Colorier la zone du grand dessin
             target.setAttribute('fill', activeColor);
+            if (typeof verifierDessin === 'function') { verifierDessin(); }
             
         }
     });
