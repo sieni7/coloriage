@@ -77,9 +77,35 @@
     justify-content: center;
 }
 
+.btn-fermer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    border: 2px solid #333333;
+    border-radius: 50%;
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-fermer:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
 .celebration-content {
+    position: relative;
     background-color: #ffffff;
     padding: 2rem;
+    padding-top: 3rem;
     border-radius: 16px;
     text-align: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);

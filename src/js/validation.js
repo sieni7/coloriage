@@ -1,4 +1,24 @@
-// Logique de validation et feedback positif
+// Logique de validation, celebration et reinitialisation
+let celebrationVue = false;
+
+function ouvrirCelebration() {
+    const overlay = document.getElementById('celebration-overlay');
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden', 'false');
+    const btnFermer = document.getElementById('btn-fermer');
+    if (btnFermer) btnFermer.focus();
+}
+
+function fermerCelebration() {
+    const overlay = document.getElementById('celebration-overlay');
+    if (!overlay) return;
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden', 'true');
+    const feutreActif = document.querySelector('.feutre.actif');
+    if (feutreActif) feutreActif.focus();
+}
+
 function verifierDessin() {
     const svgPrincipal = document.querySelector('.svg-principal');
     if (!svgPrincipal || typeof MODELE_CIBLE === 'undefined') return;
@@ -18,11 +38,11 @@ function verifierDessin() {
         }
     }
 
-    if (toutCorrespond) {
-        const overlay = document.getElementById('celebration-overlay');
-        if (overlay) {
-            overlay.style.display = 'flex';
-        }
+    if (toutCorrespond && !celebrationVue) {
+        celebrationVue = true;
+        ouvrirCelebration();
+    } else if (!toutCorrespond) {
+        celebrationVue = false;
     }
 }
 
@@ -37,15 +57,17 @@ function recommencerDessin() {
         }
     }
 
-    const overlay = document.getElementById('celebration-overlay');
-    if (overlay) {
-        overlay.style.display = 'none';
-    }
+    celebrationVue = false;
+    fermerCelebration();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnRecommencer = document.getElementById('btn-recommencer');
     if (btnRecommencer) {
         btnRecommencer.addEventListener('click', recommencerDessin);
+    }
+    const btnFermer = document.getElementById('btn-fermer');
+    if (btnFermer) {
+        btnFermer.addEventListener('click', fermerCelebration);
     }
 });
