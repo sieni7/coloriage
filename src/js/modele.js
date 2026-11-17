@@ -1,32 +1,39 @@
-// Applique les couleurs du modele cible au SVG de gauche au chargement
+'use strict';
+
+// Graine : Date.now() par defaut, injectable via window.currentSeed pour les tests.
+function graineCourante() {
+  if (typeof window !== 'undefined' && window.currentSeed) { return window.currentSeed; }
+  return Date.now();
+}
+
+function dessinCourant() {
+  const id = (typeof window !== 'undefined' && window.currentDrawingId) ? window.currentDrawingId : 'maison';
+  return DRAWINGS.find(d => d.id === id) || DRAWINGS[0];
+}
+
+window.renderCurrentDrawing = function () {
+  const d = dessinCourant();
+  if (!d) return;
+
+  const modeleCles = randomizeModel(d, graineCourante());
+
+  // Vidage des anciennes cles avant reconstruction (R4)
+  Object.keys(MODELE_CIBLE).forEach(k => delete MODELE_CIBLE[k]);
+
+  // Mapping strict : renderDrawing emet id="zone-${z.id}"
+  for (const [id, colorKey] of Object.entries(modeleCles)) {
+    if (COLORS[colorKey]) { MODELE_CIBLE['zone-' + id] = COLORS[colorKey]; }
+  }
+
+  const dModel = { ...d, zones: d.zones.map(z => ({ ...z, color: modeleCles[z.id] })) };
+
+  const miniature = document.getElementById('miniature-container');
+  if (miniature) { miniature.innerHTML = renderDrawing(dModel, { model: true }); }
+
+  const principal = document.getElementById('principal-container');
+  if (principal) { principal.innerHTML = renderDrawing(d, { model: false }); }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    const svgModele = document.querySelector('.svg-modele');
-    if (!svgModele) return;
-
-    // Moteur generique : DRAWING_ID sera pilote par le selecteur en v3.3b
-    const DRAWING_ID = 'maison';
-    const seed = 42;
-
-    const dessin = DRAWINGS.find(d => d.id === DRAWING_ID);
-    const modeleCles = randomizeModel(dessin, seed);
-
-    // Vidage des anciennes cles avant reconstruction (R4)
-    Object.keys(MODELE_CIBLE).forEach(k => delete MODELE_CIBLE[k]);
-
-    // Mapping generique : le helper domIdFor porte l'unique exception historique
-    const MODELE_HEX = {};
-    for (const [id, colorKey] of Object.entries(modeleCles)) {
-        const domId = domIdFor(dessin, id);
-        if (COLORS[colorKey]) {
-            MODELE_HEX[domId] = COLORS[colorKey];
-        }
-    }
-    Object.assign(MODELE_CIBLE, MODELE_HEX);
-
-    for (const [id, couleur] of Object.entries(MODELE_CIBLE)) {
-        const zone = svgModele.querySelector('#' + id);
-        if (zone) {
-            zone.setAttribute('fill', couleur);
-        }
-    }
+  window.renderCurrentDrawing();
 });
