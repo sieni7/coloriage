@@ -5,7 +5,9 @@
 /* --- Palette de feutres --- */
 .palette-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* v3.3c : jusqu'a 8 couleurs ; 48px minimum -> 4 feutres par ligne a 800px,
+       2 lignes au lieu de 4, le selecteur de dessins garde sa hauteur. */
+    grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
     gap: 8px;
     margin-top: 10px;
     flex-grow: 1;
