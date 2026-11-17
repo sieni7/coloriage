@@ -17,6 +17,13 @@ const COLORS = {
   bleuclair:'#87ceeb'
 };
 
+/* Correspondance id de zone -> id DOM, uniquement pour le balisage statique
+   historique de index.html. Sera supprimee quand v3.3b generera le SVG. */
+const DOM_ID_OVERRIDES = { maison: { mur: 'zone-murs' } };
+function domIdFor(d, zoneId) {
+  const o = DOM_ID_OVERRIDES[d.id];
+  return (o && o[zoneId]) || ('zone-' + zoneId);
+}
 const DRAWINGS = [
   { id: 'maison', nom: 'La maison', niveau: 1,
     palette: ['rouge','jaune','bleu','vert','orange','violet','marron','bleuclair'],
@@ -203,7 +210,7 @@ function renderDrawing(d, { model = false, fills = {}, strokeWidth = 4 } = {}) {
   const zones = d.zones.map(z => {
     const key = model ? z.color : fills[z.id];
     const fill = key ? COLORS[key] : '#ffffff';
-    return `<g class="zone" data-zone="${z.id}" fill="${fill}" stroke="#000" ` +
+    return `<g id="${domIdFor(d, z.id)}" class="zone" data-zone="${z.id}" fill="${fill}" stroke="#000" ` +
            `stroke-width="${strokeWidth}" stroke-linejoin="round">${z.el}</g>`;
   }).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="${d.nom}">${zones}</svg>`;
@@ -219,5 +226,5 @@ function isComplete(d, fills, model) {
   return d.zones.every(z => fills[z.id] === model[z.id]);
 }
 
-if (typeof window !== 'undefined') Object.assign(window, { COLORS, DRAWINGS, renderDrawing, isComplete, mulberry32, randomizeModel });
-if (typeof module !== 'undefined') module.exports = { COLORS, DRAWINGS, renderDrawing, isComplete, mulberry32, randomizeModel };
+if (typeof window !== 'undefined') Object.assign(window, { COLORS, DRAWINGS, renderDrawing, isComplete, mulberry32, randomizeModel, domIdFor });
+if (typeof module !== 'undefined') module.exports = { COLORS, DRAWINGS, renderDrawing, isComplete, mulberry32, randomizeModel, domIdFor };
