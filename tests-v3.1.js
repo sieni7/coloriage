@@ -63,7 +63,7 @@ section('TEST 4 - zones fixed');
       }
     }
   }
-  assert(total === 7, '7 zones fixed (' + total + ')');
+  assert(total === 19, '19 zones fixed (' + total + ')');
   assert(ok, 'couleur fixe respectee sur 50 graines' + (detail ? ' -> ' + detail : ''));
 }
 
@@ -80,7 +80,7 @@ section('TEST 5 - zones allowed');
       }
     }
   }
-  assert(total === 22, '22 zones allowed (' + total + ')');
+  assert(total === 32, '32 zones allowed (' + total + ')');
   assert(ok, 'tirage toujours dans allowed sur 100 graines' + (detail ? ' -> ' + detail : ''));
 }
 
